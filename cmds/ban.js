@@ -8,12 +8,15 @@ module.exports.run = async (bot,message,args) => {
     let rUser = bot.rUser;
     if(!args[0]) return bot.send("Вы не указали пользователя");
     if(!rUser) return bot.send("Пользователь не найден");
+    profile[rUser.id].ban = true;
+    fs.writeFile('./profile.json',JSON.stringify(profile),(err)=>{
+        if(err) console.log(err);
+      })
     let embed = new Discord.RichEmbed()
     .setDescription("Бан")
     .setColor('#e22216')
     .addField("Администратор",message.author.username)
     .addField("Забанил",`${rUser.user.username}`);
-    
     message.guild.member(rUser).ban("Бан");
     message.channel.send(embed);
     }catch(err){
