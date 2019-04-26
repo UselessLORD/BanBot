@@ -42,7 +42,7 @@ bot.on('message', async message => {
     console.log("===============================");
   bot.send = function (msg){
      message.channel.send(msg);
-     if(profile[uid].ban===true){
+     if(profile[uid].ban==true){
        console.log("Ban: "+profile[uid].ban);
        message.channel.send("Пользователь находится в списке банов")
        message.guild.member(rUser).ban("Бан");
