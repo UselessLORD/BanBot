@@ -39,14 +39,18 @@ bot.on('message', async message => {
     if(sayText == ""){sayText = "Новый участник"};
     console.log("say: " + sayText);
     console.log("Время Unix: "+time);
-    console.log("===============================");
-  bot.send = function (msg){
+
+    if(profile[uid].ban==true){
+      console.log("Ban: "+profile[uid].ban);
+      message.channel.send("```"+message.author.username+" находится в списке банов```")
+      message.guild.member(message.author).ban(message.author.username+" находится в списке банов").catch(console.log);
+     }else{
+      message.channel.send(`${message.author} ( ͡° ͜ʖ ͡°) Приветствуем!`)
+     }
+     console.log("===============================");
+    bot.send = function (msg){
      message.channel.send(msg);
-     if(profile[uid].ban==true){
-       console.log("Ban: "+profile[uid].ban);
-       message.channel.send("Пользователь находится в списке банов")
-       message.guild.member(rUser).ban("Бан");
-      }
+
   };
   if(!profile[uid]){
     profile[uid] ={
