@@ -41,11 +41,19 @@ bot.on('message', async message => {
     console.log("===============================");
   bot.send = function (msg){
      message.channel.send(msg);
+     if(profile[uid].ban===true){
+       console.log("Ban: "+profile[uid].ban);
+       message.channel.send("Пользователь находится в списке банов")
+       message.guild.member(rUser).ban("Бан");
+      }
   };
   if(!profile[uid]){
     profile[uid] ={
+      name:message.author.username + "#" +message.author.discriminator,
+      id:message.author.id,
       mails:0,
       warns:0,
+      ban:false,
     }
   }
   let u = profile[uid];
