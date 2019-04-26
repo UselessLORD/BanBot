@@ -12,7 +12,7 @@ module.exports.run = async (bot,message,args) => {
     profile[rUser.id].warns++;
     if(profile[rUser.id].warns >=3){
         profile[rUser.id].ban = true;
-        message.guild.member(rUser).ban("3/3 Предупреждений");
+        message.guild.member(rUser).ban("3/3 Предупреждений").catch(console.log);
     }
     fs.writeFile('./profile.json',JSON.stringify(profile),(err)=>{
         if(err) console.log(err);
