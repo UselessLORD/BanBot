@@ -10,18 +10,20 @@ module.exports.run = async (bot,message,args) => {
     if(!rUser) return bot.send("Пользователь не найден");
     if(!profile[rUser.id])return bot.send("Пользователя нету в profile.json");
     profile[rUser.id].warns++;
+    if(profile[rUser.id].warns >=3){
+        profile[rUser.id].ban = true;
+        message.guild.member(rUser).ban("3/3 Предупреждений");
+    }
     fs.writeFile('./profile.json',JSON.stringify(profile),(err)=>{
         if(err) console.log(err);
     });
-    if(profile[rUser.id].warns >=3){
-        message.guild.member(rUser).kick("3/3 Предупреждений");
-    }
     let embed = new Discord.RichEmbed()
     .setDescription("Предупреждение")
     .setColor('#e22216')
     .addField("Администратор",message.author.username)
     .addField("Выдал предупреждение",`${rUser.user.username}`)
-    .addField("Количество предупрежденией",`${profile[rUser.id].warns}/3`);
+    .addField("Количество предупрежденией",`${profile[rUser.id].warns}/3`)
+    .addField("Забанен: ",`${profile[rUser.id].ban}`);
 
     message.channel.send(embed);
     }catch(err){

@@ -31,6 +31,7 @@ bot.on('message', async message => {
   let uid = message.author.id;
   let time = Math.round(Date.now()/1000);
   let sayText = message.content;
+  let rUser = bot.rUser;
     console.log("===============================");
     console.log("Server: " + message.guild);
     console.log("channel: " + message.channel.name);
