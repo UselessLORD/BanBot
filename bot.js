@@ -36,23 +36,21 @@ bot.on('message', async message => {
     console.log("Server: " + message.guild);
     console.log("channel: " + message.channel.name);
     console.log("User: " + message.author.username + "#" +message.author.discriminator + "  /id:" + message.author.id);
-    if(sayText == ""){sayText = "Новый участник"};
+    if(sayText == ""){
+      sayText = "Новый участник";
+      message.channel.send(`${message.author} ( ͡° ͜ʖ ͡°) Приветствуем!`);
+    };
     console.log("say: " + sayText);
     console.log("Время Unix: "+time);
 
-    if(profile[uid].ban==true){
-      console.log("Ban: "+profile[uid].ban);
-      message.channel.send("```"+message.author.username+" находится в списке банов```")
-      message.guild.member(message.author).ban(message.author.username+" находится в списке банов").catch(console.log);
-     }else{
-      message.channel.send(`${message.author} ( ͡° ͜ʖ ͡°) Приветствуем!`)
-     }
+
      console.log("===============================");
     bot.send = function (msg){
      message.channel.send(msg);
 
   };
   if(!profile[uid]){
+    message.channel.send("```"+message.author.username+" Успешно записан в базу.```");
     profile[uid] ={
       name:message.author.username + "#" +message.author.discriminator,
       id:message.author.id,
@@ -67,6 +65,12 @@ bot.on('message', async message => {
   fs.writeFile('./profile.json',JSON.stringify(profile),(err)=>{
     if(err) console.log(err);
   })
+
+  if(profile[uid].ban==true){
+    console.log("Ban: "+profile[uid].ban);
+    message.channel.send("```"+message.author.username+" находится в списке банов```")
+    message.guild.member(message.author).ban(message.author.username+" находится в списке банов").catch(console.log);
+   }
   
   let user = message.author.username;
   let userid = message.author.id;
